@@ -5,7 +5,7 @@ export default function Home() {
     <div>
       <h1>Hello Next.js</h1>
       <Link href="/home">
-        <a classname="btn btn-info">Home</a>
+        <a>Home</a>
       </Link>
     </div>
   )
