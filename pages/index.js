@@ -1,6 +1,5 @@
-import Link from "next/link"
-import Nav from 'react-bootstrap/Nav'
-import Menu from "../compements/Menu"
+import Link from "next/link";
+import Menu from "../compements/Menu";
 export default function Home() {
   return (
     <div>
@@ -10,5 +9,5 @@ export default function Home() {
         <a>Home</a>
       </Link>
     </div>
-  )
+  );
 }
