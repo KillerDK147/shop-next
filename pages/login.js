@@ -12,11 +12,13 @@ const Login = () => {
   let handerSubmit = async (e) => {
     e.preventDefault();
     console.log(Account);
-    await axios.post("http://localhost:3001/api/login", Account).then((res) => {
-      console.log(res.data);
-      localStorage.setItem("x-auth-token", JSON.stringify(res.data));
-      Router.push("./home");
-    });
+    await axios
+      .post("https://shop-pipline.herokuapp.com/api/login", Account)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("x-auth-token", JSON.stringify(res.data));
+        Router.push("./home");
+      });
   };
 
   let handlerChange = (e) => {
