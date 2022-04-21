@@ -47,8 +47,8 @@ export async function getStaticProps() {
         id: card._id.toString(),
         seller: card.seller.toString(),
       })),
-      revalidate: 1,
     },
+    revalidate: 1,
   };
 }
 
