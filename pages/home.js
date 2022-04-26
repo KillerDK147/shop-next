@@ -28,21 +28,32 @@ function Home(props) {
   return (
     <div>
       <CardBord cards={props.cards} />
-      <button
-        onClick={() => {
-          axios
-            .get("https://shop-pipline.herokuapp.com/api/produkter")
-            .then((res) => {
-              setCards(res.data);
-            });
-        }}
-      >
-        Get Data
-      </button>
+      <button onClick={refreshPage}>Refresh</button>
     </div>
   );
 }
-
+async function refreshPage() {
+  const result = await axios.get(
+    "https://shop-pipline.herokuapp.com/api/produkter"
+  );
+  const card = result.data;
+  console.log("Reloaded" + card);
+  return {
+    props: {
+      cards: card.map((card) => ({
+        katergori: card.katergori,
+        titel: card.titel,
+        besk: card.besk,
+        sti: card.sti,
+        antal: card.antal,
+        enhed: card.enhed,
+        pris: card.pris,
+        id: card._id.toString(),
+        seller: card.seller.toString(),
+      })),
+    },
+  };
+}
 export async function getStaticProps() {
   const result = await axios.get(
     "https://shop-pipline.herokuapp.com/api/produkter"
