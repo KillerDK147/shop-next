@@ -38,6 +38,7 @@ async function refreshPage() {
   );
   const card = result.data;
   console.log("Reloaded" + card);
+  await fetch("api/hello.js");
   return {
     props: {
       cards: card.map((card) => ({
