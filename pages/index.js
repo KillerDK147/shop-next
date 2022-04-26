@@ -3,7 +3,6 @@ import Menu from "../compements/Menu";
 export default function Home() {
   return (
     <div>
-      <Menu />
       <h1>Hello Next.js</h1>
       <Link href="/home">
         <a>Home</a>

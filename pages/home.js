@@ -34,7 +34,6 @@ function Home(props) {
 }
 const revalidate = async () => {
   const t = await fetch("/api/revalidate?secret=supersecret");
-  console.log(t);
 };
 export async function getStaticProps() {
   const result = await axios.get(
