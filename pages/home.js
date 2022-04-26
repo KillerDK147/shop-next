@@ -28,33 +28,14 @@ function Home(props) {
   return (
     <div>
       <CardBord cards={props.cards} />
-      <button onClick={refreshPage}>Refresh</button>
+      <button onClick={revalidate}>Refresh</button>
     </div>
   );
 }
-async function refreshPage() {
-  const result = await axios.get(
-    "https://shop-pipline.herokuapp.com/api/produkter"
-  );
-  const card = result.data;
-  console.log("Reloaded" + card);
-  await fetch("api/hello.js?secret=MY_SECRET_TOKEN");
-  return {
-    props: {
-      cards: card.map((card) => ({
-        katergori: card.katergori,
-        titel: card.titel,
-        besk: card.besk,
-        sti: card.sti,
-        antal: card.antal,
-        enhed: card.enhed,
-        pris: card.pris,
-        id: card._id.toString(),
-        seller: card.seller.toString(),
-      })),
-    },
-  };
-}
+const revalidate = async () => {
+  const t = await fetch("/api/revalidate?secret=supersecret");
+  console.log(t);
+};
 export async function getStaticProps() {
   const result = await axios.get(
     "https://shop-pipline.herokuapp.com/api/produkter"
