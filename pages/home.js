@@ -25,7 +25,22 @@ function Home(props) {
   //   },
   // ];
 
-  return <CardBord cards={props.cards} />;
+  return (
+    <div>
+      <CardBord cards={props.cards} />
+      <button
+        onClick={() => {
+          axios
+            .get("https://shop-pipline.herokuapp.com/api/produkter")
+            .then((res) => {
+              setCards(res.data);
+            });
+        }}
+      >
+        Get Data
+      </button>
+    </div>
+  );
 }
 
 export async function getStaticProps() {
@@ -48,7 +63,6 @@ export async function getStaticProps() {
         seller: card.seller.toString(),
       })),
     },
-    revalidate: 1,
   };
 }
 
