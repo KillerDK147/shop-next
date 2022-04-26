@@ -38,7 +38,7 @@ async function refreshPage() {
   );
   const card = result.data;
   console.log("Reloaded" + card);
-  await fetch("api/hello.js");
+  await fetch("api/hello.js?secret=MY_SECRET_TOKEN");
   return {
     props: {
       cards: card.map((card) => ({
