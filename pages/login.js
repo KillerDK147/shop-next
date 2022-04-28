@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import Router from "next/router";
 import axios from "axios";
 import { login } from "../Service/authService";
+import toast from "../compements/toast/toast";
 
 useState;
 const Login = () => {
@@ -10,7 +11,6 @@ const Login = () => {
     Email: "",
     password: "",
   });
-
   let handerSubmit = async (e) => {
     e.preventDefault();
     console.log(Account);
@@ -21,11 +21,18 @@ const Login = () => {
     //     localStorage.setItem("x-auth-token", JSON.stringify(res.data));
     //     Router.push("./home");
     //   });
-    const acc = await login(Account.Email, Account.password);
-    console.log("acc");
-    console.log(acc);
-    if (acc) {
-      Router.push("/home");
+    try {
+      const acc = await login(Account.Email, Account.password);
+      console.log("acc");
+      console.log(acc);
+      if (acc) {
+        Router.push("/home");
+      } else {
+        console.log("error");
+      }
+    } catch (error) {
+      console.log(error.response.data);
+      toast({ type: "error", message: "Wrong Email or Password" });
     }
   };
 

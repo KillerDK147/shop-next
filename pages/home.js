@@ -39,7 +39,6 @@ const revalidate = async () => {
 };
 export async function getStaticProps() {
   console.log("getStaticProps");
-  console.log(httpService.get("produkter/"));
   const result = await httpService.get("produkter/");
   console.log(result);
   const card = result.data;
