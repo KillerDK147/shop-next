@@ -2,9 +2,10 @@ import React from "react";
 import CardBord from "../compements/CardBordGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import httpService from "../Service/httpService";
+import { SSRProvider } from "react-bootstrap";
 function Home(props) {
   // const cards = [
-  //   {
+  //   {%D
   //     titel: "Køkken",
   //     katergori: "Køkken",
   //     besk: "Køkken",
@@ -26,17 +27,19 @@ function Home(props) {
 
   return (
     <div>
-      <CardBord cards={props.cards} />
-      {/* <button onClick={revalidate}>Refresh</button> */}
+      <SSRProvider>
+        <CardBord cards={props.cards} />
+      </SSRProvider>
+      <button onClick={revalidate}>Refresh</button>
     </div>
   );
 }
 const revalidate = async () => {
-  // const t = await fetch("/api/revalidate?secret=supersecret");
+  const t = await fetch("/api/revalidate?secret=supersecret");
 };
 export async function getStaticProps() {
   console.log("getStaticProps");
-  console.log(httpService.get("produkter"));
+  console.log(httpService.get("produkter/"));
   const result = await httpService.get("produkter/");
   console.log(result);
   const card = result.data;

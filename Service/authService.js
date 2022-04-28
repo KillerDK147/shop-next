@@ -16,8 +16,9 @@ export function logout() {
 }
 
 export function getJWT() {
-  console.log("getJWT" + localStorage.getItem(tokenKey));
-  return localStorage.getItem(tokenKey);
+  if (typeof window !== "undefined") {
+    return localStorage.getItem(tokenKey);
+  }
 }
 
 export function getCurrentUser() {

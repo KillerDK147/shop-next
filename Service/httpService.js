@@ -19,7 +19,7 @@ axios.interceptors.response.use(null, (error) => {
 
 function setJwt(jwt) {
   console.log("setJwt" + jwt);
-  axios.defaults.headers.common["x-auth-tokens"] = jwt;
+  axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
