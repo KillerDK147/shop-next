@@ -24,6 +24,9 @@ const Login = () => {
     const acc = await login(Account.Email, Account.password);
     console.log("acc");
     console.log(acc);
+    if (acc) {
+      Router.push("/home");
+    }
   };
 
   let handlerChange = (e) => {
