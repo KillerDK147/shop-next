@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import Router from "next/router";
-import axios from "axios";
-import { login } from "../Service/authService";
-import toast from "../compements/toast/toast";
+import { login } from "../../Service/authService";
+import toast from "../../compements/toast/toast";
 
 useState;
 const Login = () => {
