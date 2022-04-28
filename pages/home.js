@@ -2,6 +2,7 @@ import React from "react";
 import CardBord from "../compements/CardBordGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import httpService from "../Service/httpService";
 function Home(props) {
   const [cards, setCards] = React.useState([]);
   // const cards = [
@@ -36,9 +37,7 @@ const revalidate = async () => {
   const t = await fetch("/api/revalidate?secret=supersecret");
 };
 export async function getStaticProps() {
-  const result = await axios.get(
-    "https://shop-pipline.herokuapp.com/api/produkter"
-  );
+  const result = await httpService.get("produkter");
   const card = result.data;
   console.log(card);
   return {
