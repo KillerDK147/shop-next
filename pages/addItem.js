@@ -33,7 +33,7 @@ const AddItem = () => {
       await saveProd(items);
       console.log(items);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
   };
 

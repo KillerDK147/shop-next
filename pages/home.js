@@ -30,6 +30,7 @@ function Home(props) {
     <div>
       <CardBord cards={props.cards} />
       <button onClick={revalidate}>Refresh</button>
+      
     </div>
   );
 }
