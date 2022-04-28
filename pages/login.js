@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import Router from "next/router";
 import axios from "axios";
+import { login } from "../Service/authService";
+
 useState;
 const Login = () => {
   let [Account, setAccount] = useState({
@@ -12,13 +14,16 @@ const Login = () => {
   let handerSubmit = async (e) => {
     e.preventDefault();
     console.log(Account);
-    await axios
-      .post("https://shop-pipline.herokuapp.com/api/login", Account)
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("x-auth-token", JSON.stringify(res.data));
-        Router.push("./home");
-      });
+    // await axios
+    //   .post("https://shop-pipline.herokuapp.com/api/login", Account)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     localStorage.setItem("x-auth-token", JSON.stringify(res.data));
+    //     Router.push("./home");
+    //   });
+    const acc = await login(Account.Email, Account.password);
+    console.log("acc");
+    console.log(acc);
   };
 
   let handlerChange = (e) => {

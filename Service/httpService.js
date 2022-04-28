@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_url;
+console.log("process.env.NEXT_PUBLIC_url");
 console.log(process.env.NEXT_PUBLIC_url);
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
@@ -17,7 +18,8 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 function setJwt(jwt) {
-  axios.defaults.headers.common["x-auth-token"] = jwt;
+  console.log("setJwt" + jwt);
+  axios.defaults.headers.common["x-auth-tokens"] = jwt;
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

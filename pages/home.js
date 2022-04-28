@@ -1,10 +1,8 @@
 import React from "react";
 import CardBord from "../compements/CardBordGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 import httpService from "../Service/httpService";
 function Home(props) {
-  const [cards, setCards] = React.useState([]);
   // const cards = [
   //   {
   //     titel: "Køkken",
@@ -29,15 +27,18 @@ function Home(props) {
   return (
     <div>
       <CardBord cards={props.cards} />
-      <button onClick={revalidate}>Refresh</button>
+      {/* <button onClick={revalidate}>Refresh</button> */}
     </div>
   );
 }
 const revalidate = async () => {
-  const t = await fetch("/api/revalidate?secret=supersecret");
+  // const t = await fetch("/api/revalidate?secret=supersecret");
 };
 export async function getStaticProps() {
-  const result = await httpService.get("produkter");
+  console.log("getStaticProps");
+  console.log(httpService.get("produkter"));
+  const result = await httpService.get("produkter/");
+  console.log(result);
   const card = result.data;
   console.log("card");
   console.log(card);
