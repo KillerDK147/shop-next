@@ -30,7 +30,6 @@ function Home(props) {
     <div>
       <CardBord cards={props.cards} />
       <button onClick={revalidate}>Refresh</button>
-      
     </div>
   );
 }
@@ -40,6 +39,7 @@ const revalidate = async () => {
 export async function getStaticProps() {
   const result = await httpService.get("produkter");
   const card = result.data;
+  console.log("card");
   console.log(card);
   return {
     props: {
