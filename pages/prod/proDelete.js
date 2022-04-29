@@ -1,10 +1,6 @@
 import ProdDelete from "../../compements/ProdDelete";
 const proDelete = () => {
-  return (
-    <div>
-      <ProdDelete />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default proDelete;
