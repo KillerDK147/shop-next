@@ -30,7 +30,9 @@ function Home(props) {
       <SSRProvider>
         <CardBord cards={props.cards} />
       </SSRProvider>
-      <button onClick={revalidate}>Refresh</button>
+      {process.env.NODE_ENV == "development" && (
+        <button onClick={revalidate}>Refresh</button>
+      )}
     </div>
   );
 }
