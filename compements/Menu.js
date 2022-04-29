@@ -22,6 +22,9 @@ export default function Home(props) {
                 <Link href="/prod" passHref>
                   <Nav.Link>Produkter</Nav.Link>
                 </Link>
+                <Link href="/prod/deleteProd" passHref>
+                  <Nav.Link>vis alle dine produkter</Nav.Link>
+                </Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="/user/logout">
