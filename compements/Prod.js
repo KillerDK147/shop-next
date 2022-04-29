@@ -18,7 +18,6 @@ const Prod = () => {
     seller: "",
   });
   const User = getCurrentUser();
-  console.log(User);
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
