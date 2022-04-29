@@ -33,7 +33,6 @@ const Prod = () => {
         toast({ type: "success", message: "Produktet er oprettet" });
         revalidate();
         console.log("saved");
-        Route.push("/home");
       }
     } catch (ex) {
       toast({ type: "error", message: "Produktet kunne ikke oprettes" });
