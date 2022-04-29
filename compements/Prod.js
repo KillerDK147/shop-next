@@ -3,9 +3,9 @@ import { getCurrentUser } from "../Service/authService";
 import { useState } from "react";
 import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
-import Route from "next/router";
-const User = getCurrentUser();
-console.log(User);
+import { revalidate } from "../Service/Reload";
+import prod from "./../pages/prod/index";
+
 const Prod = () => {
   const [Prod, setProd] = useState({
     katergori: "grøntsager",
@@ -17,6 +17,8 @@ const Prod = () => {
     pris: 0,
     seller: "",
   });
+  const User = getCurrentUser();
+  console.log(User);
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
@@ -30,17 +32,14 @@ const Prod = () => {
 
       if (typeof window !== "undefined" && User.acces !== "client") {
         await saveProd(Prod);
-        toast({ type: "success", message: "Produktet er oprettet" });
-        revalidate();
+        await revalidate();
         console.log("saved");
+        toast({ type: "success", message: "Produktet er oprettet" });
       }
     } catch (ex) {
       toast({ type: "error", message: "Produktet kunne ikke oprettes" });
       console.log(ex.response.data);
     }
-  };
-  const revalidate = async () => {
-    const t = await fetch("/api/revalidate?secret=supersecret");
   };
   let handlerChange = (e) => {
     setProd({
@@ -131,5 +130,4 @@ const Prod = () => {
     </div>
   );
 };
-
 export default Prod;

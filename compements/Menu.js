@@ -17,9 +17,11 @@ export default function Home(props) {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Link href="/home" passHref>
-                  <Nav.Link>Home 2</Nav.Link>
+                  <Nav.Link>Home</Nav.Link>
                 </Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Link href="/prod" passHref>
+                  <Nav.Link>Produkter</Nav.Link>
+                </Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="/user/logout">

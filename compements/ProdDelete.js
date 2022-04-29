@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import httpService from "../Service/httpService";
 import { SSRProvider } from "react-bootstrap";
 import { revalidate } from "../Service/Reload";
-function Home(props) {
+function ProdDelete(props) {
   // const cards = [
   //   {%D
   //     titel: "Køkken",
@@ -40,7 +40,7 @@ function Home(props) {
 
 export async function getStaticProps() {
   console.log("getStaticProps");
-  const result = await httpService.get("produkter/");
+  const result = await httpService.get("produkter/seller");
   const card = result.data;
   console.log("card");
   console.log(card);
@@ -61,4 +61,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Home;
+export default ProdDelete;
