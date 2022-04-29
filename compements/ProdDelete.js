@@ -32,7 +32,7 @@ function ProdDelete(props) {
         <CardBord cards={props.cards} />
       </SSRProvider>
       {process.env.NODE_ENV == "development" && (
-        <button onClick={revalidate}>Refresh</button>
+        <button onClick={revalidate}>Delete</button>
       )}
     </div>
   );
