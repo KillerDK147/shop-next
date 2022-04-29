@@ -4,9 +4,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Fragment, useEffect } from "react";
 import Menu from "../compements/Menu";
+import { getCurrentUser } from "../Service/authService";
+import { useState } from "react";
 function MyApp({ Component, pageProps }) {
+  const [User, setUser] = useState({});
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
+    setUser(getCurrentUser());
   }, []);
   return (
     <Fragment>
@@ -20,7 +24,7 @@ function MyApp({ Component, pageProps }) {
         closeOnClick
         pauseOnHover
       />
-      <Menu>
+      <Menu user={User}>
         <Component {...pageProps} />
       </Menu>
     </Fragment>

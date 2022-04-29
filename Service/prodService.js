@@ -1,4 +1,3 @@
-import { headers } from "../next.config";
 import httpService from "./httpService";
 const apiEndpoint = "produkter/";
 export function saveProd(prod) {

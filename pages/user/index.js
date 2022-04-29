@@ -25,7 +25,7 @@ const Login = () => {
       console.log("acc");
       console.log(acc);
       if (acc) {
-        Router.push("/home");
+        window.location.href = "/home";
       } else {
         console.log("error");
       }
