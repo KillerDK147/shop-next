@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
+import Router from "next/router";
 
 const Prod = () => {
   const [Prod, setProd] = useState({
@@ -17,7 +18,12 @@ const Prod = () => {
     seller: "",
   });
   useEffect(() => {
-    setProd({ ...Prod, seller: getCurrentUser()._id });
+    const user = getCurrentUser();
+    if (user) {
+      setProd({ ...Prod, seller: user });
+    } else {
+      Router.push("/");
+    }
   }, []);
   const handleSelect = async (e) => {
     console.log(e);
