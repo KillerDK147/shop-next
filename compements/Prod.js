@@ -1,10 +1,9 @@
 import { Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { getCurrentUser } from "../Service/authService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
-import prod from "./../pages/prod/index";
 
 const Prod = () => {
   const [Prod, setProd] = useState({
@@ -17,8 +16,10 @@ const Prod = () => {
     pris: 0,
     seller: "",
   });
-  const User = getCurrentUser();
-  console.log(User);
+  useEffect(() => {
+    setProd({ ...Prod, seller: getCurrentUser()._id });
+  }, []);
+
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
@@ -27,8 +28,8 @@ const Prod = () => {
   let handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(Prod);
-      setProd({ ...Prod, seller: User._id });
+      const t = await User._id;
+      await setProd({ ...Prod, seller: t });
 
       if (typeof window !== "undefined" && User.acces !== "client") {
         await saveProd(Prod);
