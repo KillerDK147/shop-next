@@ -19,7 +19,6 @@ const Prod = () => {
   useEffect(() => {
     setProd({ ...Prod, seller: getCurrentUser()._id });
   }, []);
-
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
@@ -27,19 +26,58 @@ const Prod = () => {
   };
   let handleSubmit = async (e) => {
     try {
+      const User = getCurrentUser();
       e.preventDefault();
-      const t = await User._id;
-      await setProd({ ...Prod, seller: t });
-
-      if (typeof window !== "undefined" && User.acces !== "client") {
-        await saveProd(Prod);
-        await revalidate();
-        console.log("saved");
-        toast({ type: "success", message: "Produktet er oprettet" });
+      if (Prod.titel === "" || Prod.besk === "" || Prod.sti === "") {
+        toast({ type: "error", title: "Fejl", message: "Udfyld alle felter" });
+        console.log(User);
+        return;
+      }
+      if (User.acces === "client") {
+        toast({
+          type: "error",
+          title: "Fejl",
+          message: "Du har ikke tilladelse",
+        });
+        return;
+      } else {
+        if (typeof window !== "undefined") {
+          if (Prod.sti >= 5 && Prod.katergori >= 3 && Prod.titel >= 3) {
+            await saveProd(Prod);
+            await revalidate();
+            console.log("saved");
+            toast({ type: "success", message: "Produktet er oprettet" });
+          } else {
+            console.log("fejl");
+            if (Prod.sti.length < 5) {
+              toast({
+                type: "error",
+                title: "Fejl",
+                message: "sti skal være over 5",
+              });
+              console.log("sti");
+            }
+            if (Prod.katergori.length <= 3) {
+              toast({
+                type: "error",
+                title: "Fejl",
+                message: "kategori skal være over 3",
+              });
+            }
+            if (Prod.titel.length <= 3) {
+              toast({
+                type: "error",
+                title: "Fejl",
+                message: "titel skal være over 3",
+              });
+              console.log("titel");
+            }
+          }
+        }
       }
     } catch (ex) {
       toast({ type: "error", message: "Produktet kunne ikke oprettes" });
-      console.log(ex.response.data);
+      console.log(ex);
     }
   };
   let handlerChange = (e) => {
@@ -131,4 +169,5 @@ const Prod = () => {
     </div>
   );
 };
+
 export default Prod;
