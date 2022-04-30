@@ -28,8 +28,6 @@ const AddItem = () => {
   let handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log("items");
-      setItems({ ...items, seller: getCurrentUser()._id });
       await saveProd(items);
       console.log(items);
     } catch (error) {

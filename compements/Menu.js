@@ -12,15 +12,18 @@ export default function Home(props) {
       <Navbar bg="light" expand="lg">
         <SSRProvider>
           <Container>
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Link href="/home" passHref>
+                <Link href="/" passHref>
                   <Nav.Link>Home</Nav.Link>
                 </Link>
                 <Link href="/prod" passHref>
                   <Nav.Link>Produkter</Nav.Link>
+                </Link>
+                <Link href="/prod/deleteProd" passHref>
+                  <Nav.Link>vis alle dine produkter</Nav.Link>
                 </Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

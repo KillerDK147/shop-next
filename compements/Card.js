@@ -1,12 +1,9 @@
 import { Button, Card as BsCard } from "react-bootstrap";
-
 const Card = ({ titel, katergori, besk, sti, antal, enhed, pris }) => {
-  console.log("titel");
-  console.log(titel);
   return (
     <BsCard>
       <div className="p-2">
-        <BsCard.Img variant="top" src={sti} />
+        <BsCard.Img variant="top" src={sti} height="350" />
       </div>
       <BsCard.Body>
         <BsCard.Title>

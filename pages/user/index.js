@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import Router from "next/router";
 import { login } from "../../Service/authService";
 import toast from "../../compements/toast/toast";
 
@@ -25,7 +24,7 @@ const Login = () => {
       console.log("acc");
       console.log(acc);
       if (acc) {
-        window.location.href = "/home";
+        window.location.href = "/";
       } else {
         console.log("error");
       }

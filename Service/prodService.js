@@ -18,5 +18,10 @@ export async function getProdById(id) {
   return httpService.get(apiEndpoint + id);
 }
 export async function getProdBySeller(sellerId) {
+  console.log(sellerId);
   return httpService.get(apiEndpoint + "/seller/" + sellerId);
+}
+
+export async function deleteProd(id) {
+  return httpService.delete(apiEndpoint + id);
 }
