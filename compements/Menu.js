@@ -19,22 +19,30 @@ export default function Home(props) {
                 <Link href="/" passHref>
                   <Nav.Link>Home</Nav.Link>
                 </Link>
-                <Link href="/prod" passHref>
-                  <Nav.Link>Produkter</Nav.Link>
-                </Link>
-                <Link href="/prod/deleteProd" passHref>
-                  <Nav.Link>vis alle dine produkter</Nav.Link>
-                </Link>
+                {props.user && (
+                  <Link href="/prod" passHref>
+                    <Nav.Link>Produkter</Nav.Link>
+                  </Link>
+                )}
+                {props.user && (
+                  <Link href="/prod/deleteProd" passHref>
+                    <Nav.Link>vis alle dine produkter</Nav.Link>
+                  </Link>
+                )}
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="/user/logout">
                     Logout
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/user/">login</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="/user/createUser">
-                    createUser
-                  </NavDropdown.Item>
+                  {props.user && (
+                    <div>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="/user/createUser">
+                        createUser
+                      </NavDropdown.Item>
+                    </div>
+                  )}
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
