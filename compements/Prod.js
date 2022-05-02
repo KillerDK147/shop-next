@@ -20,7 +20,7 @@ const Prod = () => {
   useEffect(() => {
     const user = getCurrentUser();
     if (user) {
-      setProd({ ...Prod, seller: user });
+      setProd({ ...Prod, seller: user._id });
     } else {
       Router.push("/");
     }
@@ -48,7 +48,12 @@ const Prod = () => {
         return;
       } else {
         if (typeof window !== "undefined") {
-          if (Prod.sti >= 5 && Prod.katergori >= 3 && Prod.titel >= 3) {
+          console.log(Prod);
+          if (
+            Prod.sti.length >= 5 &&
+            Prod.katergori.length >= 3 &&
+            Prod.titel.length >= 3
+          ) {
             await saveProd(Prod);
             await revalidate();
             console.log("saved");
