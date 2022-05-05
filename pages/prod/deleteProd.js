@@ -1,5 +1,4 @@
 import DeleteCardBord from "../../compements/deleteBordGroup";
-import { getProdBySeller } from "../../Service/prodService";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "../../Service/authService";
 import httpService from "../../Service/httpService";
