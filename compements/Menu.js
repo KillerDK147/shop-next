@@ -35,14 +35,13 @@ export default function Home(props) {
                     Logout
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/user/">login</NavDropdown.Item>
-                  {props.user && (
-                    <div>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="/user/createUser">
-                        createUser
-                      </NavDropdown.Item>
-                    </div>
-                  )}
+
+                  <div>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/user/createUser">
+                      createUser
+                    </NavDropdown.Item>
+                  </div>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
