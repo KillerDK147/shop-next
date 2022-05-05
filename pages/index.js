@@ -28,7 +28,7 @@ function Home(props) {
 
   return (
     <div>
-    <h1>hej benjamin</h1>
+    <h1>hej benjamin1</h1>
       <SSRProvider>
         <CardBord cards={props.cards} />
       </SSRProvider>
