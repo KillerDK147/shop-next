@@ -31,7 +31,6 @@ function Home(props) {
   console.log(session);
   return (
     <div>
-    <h1>hej benjamin2</h1>
       <SSRProvider>
         <CardBord cards={props.cards} />
       </SSRProvider>

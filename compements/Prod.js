@@ -58,6 +58,7 @@ const Prod = () => {
             await revalidate();
             console.log("saved");
             toast({ type: "success", message: "Produktet er oprettet" });
+            window.location.href = "/";
           } else {
             console.log("fejl");
             if (Prod.sti.length < 5) {
