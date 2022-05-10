@@ -1,6 +1,5 @@
 import http from "./httpService";
 import jwtDecode from "jwt-decode";
-
 const tokenKey = "x-auth-token";
 const apiEndpoint = "login/";
 console.log("apiEndpoint");
@@ -16,8 +15,15 @@ export function logout() {
 }
 
 export function getJWT() {
-  if (typeof window !== "undefined") {
+  if (
+    typeof window !== "undefined" &&
+    localStorage.getItem(tokenKey) !== null
+  ) {
     return localStorage.getItem(tokenKey);
+  } else {
+    if (typeof window !== "undefined") {
+      return localStorage.setItem(tokenKey, Cookies.get());
+    }
   }
 }
 

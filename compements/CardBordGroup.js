@@ -7,6 +7,9 @@ const CardBord = ({ cards }) => {
   const carsPerPage = 6;
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
+  if (cards === undefined) {
+    return <div>Loading...</div>;
+  }
   const currentCars = cards.slice(indexOfFirstCar, indexOfLastCar);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
