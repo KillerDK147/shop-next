@@ -1,7 +1,5 @@
 import { Form, Button, Dropdown, DropdownButton } from "react-bootstrap";
-import Router from "next/router";
 import { useState } from "react";
-import { getCurrentUser } from "../Service/authService";
 import { saveProd } from "../Service/prodService";
 const AddItem = () => {
   let [items, setItems] = useState({

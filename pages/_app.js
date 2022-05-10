@@ -16,8 +16,6 @@ export default function App({
     import("bootstrap/dist/js/bootstrap");
     setUser(getCurrentUser());
   }, []);
-  console.log("User");
-  console.log(User);
   return (
     <Fragment>
       <ToastContainer

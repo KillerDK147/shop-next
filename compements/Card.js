@@ -3,7 +3,7 @@ const Card = ({ titel, katergori, besk, sti, antal, enhed, pris }) => {
   return (
     <BsCard>
       <div className="p-2">
-        <BsCard.Img variant="top" src={sti} height="350" />
+        <BsCard.Img variant="top" src={"uploads/" + sti} height="350" />
       </div>
       <BsCard.Body>
         <BsCard.Title>

@@ -5,8 +5,11 @@ import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
 import Router from "next/router";
-
-const Prod = () => {
+import Image from "next/image";
+import prod from "../pages/prod";
+const Prod = (props) => {
+  const [image, setImage] = useState(null);
+  const [createObjectURL, setCreateObjectURL] = useState(null);
   const [Prod, setProd] = useState({
     katergori: "grøntsager",
     titel: "",
@@ -24,17 +27,42 @@ const Prod = () => {
     } else {
       Router.push("/");
     }
-  }, []);
+  }, [Prod]);
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
     console.log(`jeg er nu ${Prod.katergori}`);
   };
+  const uploadToClient = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const i = event.target.files[0];
+
+      setImage(i);
+      console.log(i);
+      const t = i.name;
+      setProd({ ...Prod, sti: t });
+      console.log(Prod.sti);
+      setCreateObjectURL(URL.createObjectURL(i));
+    }
+  };
+  const uploadToServer = async (event) => {
+    const body = new FormData();
+    // console.log("file", image)
+    body.append("file", image);
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body,
+    });
+  };
+
   let handleSubmit = async (e) => {
     try {
       const User = getCurrentUser();
       e.preventDefault();
-      if (Prod.titel === "" || Prod.besk === "" || Prod.sti === "") {
+      console.log("hej med dig spasser");
+      console.log("uploadet");
+      console.log(Prod);
+      if (Prod.titel === "" || Prod.besk === "" || image === null) {
         toast({ type: "error", title: "Fejl", message: "Udfyld alle felter" });
         console.log(User);
         return;
@@ -55,10 +83,12 @@ const Prod = () => {
             Prod.titel.length >= 3
           ) {
             await saveProd(Prod);
+
+            await uploadToServer();
+
             await revalidate();
             console.log("saved");
             toast({ type: "success", message: "Produktet er oprettet" });
-            window.location.href = "/";
           } else {
             console.log("fejl");
             if (Prod.sti.length < 5) {
@@ -89,7 +119,7 @@ const Prod = () => {
       }
     } catch (ex) {
       toast({ type: "error", message: "Produktet kunne ikke oprettes" });
-      console.log(ex);
+      console.log(ex.response);
     }
   };
   let handlerChange = (e) => {
@@ -97,6 +127,7 @@ const Prod = () => {
       ...Prod,
       [e.target.name]: e.target.value,
     });
+    console.log(Prod);
   };
   return (
     <div className="container">
@@ -137,11 +168,9 @@ const Prod = () => {
         <Form.Group className="mb-3" controlId="formBasicSti">
           <Form.Label>sti</Form.Label>
           <Form.Control
-            type="text"
+            type="file"
             placeholder="sti"
-            name="sti"
-            value={Prod.sti}
-            onChange={handlerChange}
+            onChange={uploadToClient}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicAntal">

@@ -12,7 +12,7 @@ export default function Home(props) {
       <Navbar bg="light" expand="lg">
         <SSRProvider>
           <Container>
-            <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="/">Negativ´s Shop</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">

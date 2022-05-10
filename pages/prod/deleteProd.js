@@ -18,7 +18,7 @@ const DeleteProd = () => {
       console.log("result.data");
     };
     fetchData();
-  }, []);
+  }, [cards]);
 
   return (
     <div>
