@@ -6,12 +6,18 @@ import { Fragment, useEffect } from "react";
 import Menu from "../compements/Menu";
 import { getCurrentUser } from "../Service/authService";
 import { useState } from "react";
-function MyApp({ Component, pageProps }) {
+import { SessionProvider } from "next-auth/react";
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const [User, setUser] = useState({});
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
     setUser(getCurrentUser());
   }, []);
+  console.log("User");
+  console.log(User);
   return (
     <Fragment>
       <ToastContainer
@@ -24,11 +30,11 @@ function MyApp({ Component, pageProps }) {
         closeOnClick
         pauseOnHover
       />
-      <Menu user={User}>
-        <Component {...pageProps} />
-      </Menu>
+      <SessionProvider session={session}>
+        <Menu user={User}>
+          <Component {...pageProps} />
+        </Menu>
+      </SessionProvider>
     </Fragment>
   );
 }
-
-export default MyApp;

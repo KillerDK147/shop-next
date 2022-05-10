@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import CardBord from "../compements/CardBordGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import httpService from "../Service/httpService";
 import { SSRProvider } from "react-bootstrap";
 import { revalidate } from "../Service/Reload";
+import { useSession, signIn, signOut } from "next-auth/react";
 function Home(props) {
   // const cards = [
   //   {%D
@@ -26,13 +27,19 @@ function Home(props) {
   //   },
   // ];
 
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <div>
       <SSRProvider>
         <CardBord cards={props.cards} />
       </SSRProvider>
       {process.env.NODE_ENV == "development" && (
-        <button onClick={revalidate}>Refresh</button>
+        <Fragment>
+          {session && <button onClick={() => signOut()}>Sign out</button>}
+          {!session && <button onClick={() => signIn()}>Sign in</button>}
+          <button onClick={revalidate}>Refresh</button>
+        </Fragment>
       )}
     </div>
   );
@@ -43,7 +50,7 @@ export async function getStaticProps() {
   const result = await httpService.get("produkter/");
   const card = result.data;
   console.log("card");
-  console.log(card);
+  console.log(card.titel);
   return {
     props: {
       cards: card.map((card) => ({
