@@ -12,10 +12,6 @@ const DeleteProd = () => {
         .then((res) => {
           setCards(res.data);
         });
-
-      console.log("result.data");
-      console.log(cards);
-      console.log("result.data");
     };
     fetchData();
   }, [cards]);

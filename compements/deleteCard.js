@@ -17,7 +17,6 @@ const DeleteCard = ({
   _id,
 }) => {
   const Id = getCurrentUser()._id;
-  console.log(Id);
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
