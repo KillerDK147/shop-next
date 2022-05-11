@@ -38,7 +38,10 @@ const Prod = (props) => {
       setValidImage(i);
       console.log(i);
       const t = i.name;
-      const type = t.split(".");
+      const type = [];
+      if (t !== undefined) {
+        type = t.split(".");
+      }
       console.log(i.size);
       if (
         type[1] === "jpg" ||
