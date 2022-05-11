@@ -28,11 +28,9 @@ export default function App({
         closeOnClick
         pauseOnHover
       />
-      <SessionProvider session={session}>
         <Menu user={User}>
           <Component {...pageProps} />
         </Menu>
-      </SessionProvider>
     </Fragment>
   );
 }
