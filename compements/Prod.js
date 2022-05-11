@@ -5,8 +5,6 @@ import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
 import Router from "next/router";
-import Image from "next/image";
-import prod from "../pages/prod";
 const Prod = (props) => {
   const [image, setImage] = useState(null);
   const [validImage, setValidImage] = useState(null);

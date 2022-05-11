@@ -1,6 +1,6 @@
 import { IncomingForm } from "formidable";
-import { promises as fs } from "fs";
-
+import { flushSync } from "react-dom/cjs/react-dom.production.min";
+import * as fs from "node:fs";
 var mv = require("mv");
 
 export const config = {
