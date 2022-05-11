@@ -23,7 +23,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm install
-    - run: npm run build
+    - run: npm run dev
     env:
       NEXT_PUBLIC_url: https://shop-pipline.herokuapp.com/api/
       
