@@ -20,10 +20,6 @@ export function getJWT() {
     localStorage.getItem(tokenKey) !== null
   ) {
     return localStorage.getItem(tokenKey);
-  } else {
-    if (typeof window !== "undefined") {
-      return localStorage.setItem(tokenKey, Cookies.get());
-    }
   }
 }
 
