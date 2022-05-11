@@ -9,6 +9,7 @@ import Image from "next/image";
 import prod from "../pages/prod";
 const Prod = (props) => {
   const [image, setImage] = useState(null);
+  const [validImage, setValidImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [Prod, setProd] = useState({
     katergori: "grøntsager",
@@ -36,13 +37,27 @@ const Prod = (props) => {
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
-
-      setImage(i);
+      setValidImage(i);
       console.log(i);
       const t = i.name;
-      setProd({ ...Prod, sti: t });
-      console.log(Prod.sti);
-      setCreateObjectURL(URL.createObjectURL(i));
+      const type = t.split(".");
+      console.log(i.size);
+      if (
+        type[1] === "jpg" ||
+        type[1] === "png" ||
+        (type[1] === "jpeg" && i.size < 1000000)
+      ) {
+        console.log("image uploaded");
+        setImage(i);
+        setCreateObjectURL(URL.createObjectURL(i));
+        setProd({ ...Prod, sti: i.name });
+      } else {
+        toast({
+          type: "error",
+          title: "Fejl",
+          message: "Kun JPG og PNG filer",
+        });
+      }
     }
   };
   const uploadToServer = async (event) => {
@@ -59,9 +74,18 @@ const Prod = (props) => {
     try {
       const User = getCurrentUser();
       e.preventDefault();
-      console.log("hej med dig spasser");
-      console.log("uploadet");
-      console.log(Prod);
+      if (!image) {
+        toast({ type: "error", title: "Fejl", message: "Vælg et billede" });
+        return;
+      }
+      if (validImage !== image) {
+        toast({
+          type: "error",
+          title: "Fejl",
+          message: "Det er ikke samme billede",
+        });
+        return;
+      }
       if (Prod.titel === "" || Prod.besk === "" || image === null) {
         toast({ type: "error", title: "Fejl", message: "Udfyld alle felter" });
         console.log(User);
@@ -127,7 +151,6 @@ const Prod = (props) => {
       ...Prod,
       [e.target.name]: e.target.value,
     });
-    console.log(Prod);
   };
   return (
     <div className="container">
@@ -170,6 +193,7 @@ const Prod = (props) => {
           <Form.Control
             type="file"
             placeholder="sti"
+            title={image}
             onChange={uploadToClient}
           />
         </Form.Group>
