@@ -24,6 +24,7 @@ jobs:
     - run: npm ci
     - run: npm install
     - run: npm run build
+    - run: pm2 reload next
     env:
       NEXT_PUBLIC_url: https://shop-pipline.herokuapp.com/api/
       
