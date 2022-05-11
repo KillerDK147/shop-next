@@ -9,6 +9,7 @@ export const config = {
   },
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
   const data = await new Promise((resolve, reject) => {
     const form = new IncomingForm();
