@@ -1,5 +1,4 @@
 import { IncomingForm } from "formidable";
-import * as fs from "node:fs";
 var mv = require("mv");
 
 export const config = {

@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import httpService from "../Service/httpService";
 import { SSRProvider } from "react-bootstrap";
 import { revalidate } from "../Service/Reload";
-import { useSession, signIn, signOut } from "next-auth/react";
 function Home(props) {
   // const cards = [
   //   {%D
@@ -27,7 +26,6 @@ function Home(props) {
   //   },
   // ];
 
-  const { data: session } = useSession();
   return (
     <div>
       <SSRProvider>
@@ -35,8 +33,6 @@ function Home(props) {
       </SSRProvider>
       {process.env.NODE_ENV == "development" && (
         <Fragment>
-          {session && <button onClick={() => signOut()}>Sign out</button>}
-          {!session && <button onClick={() => signIn()}>Sign in</button>}
           <button onClick={revalidate}>Refresh</button>
         </Fragment>
       )}
