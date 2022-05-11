@@ -25,5 +25,5 @@ jobs:
     - run: npm install
     - run: npm run build
     env:
-      NEXT_PUBLIC_url: true
+      NEXT_PUBLIC_url: https://shop-pipline.herokuapp.com/api/
       
