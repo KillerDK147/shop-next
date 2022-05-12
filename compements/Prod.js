@@ -28,6 +28,11 @@ const Prod = (props) => {
       Router.push("/");
     }
   }, [Prod]);
+  useEffect(() => {
+    setProd({ ...Prod, sti: image });
+    console.log(Prod);
+  }, [image]);
+
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
@@ -36,11 +41,58 @@ const Prod = (props) => {
   const handleImage = async () => {
     setProd({ ...Prod, sti: test });
   };
-  const uploadToClient = async (event) => {
+  // const uploadToClient = async (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const i = event.target.files[0];
+  //     setValidImage(i);
+  //     console.log(i);
+  //     const t = i.name;
+  //     const type = [];
+  //     if (t !== undefined) {
+  //       type = t.split(".");
+  //     }
+  //     console.log(i.size);
+  //     if (
+  //       type[1] === "jpg" ||
+  //       type[1] === "png" ||
+  //       (type[1] === "jpeg" && i.size < 1000000)
+  //     ) {
+  //       console.log("image uploaded");
+  //       setImage(i);
+  //       setCreateObjectURL(URL.createObjectURL(i));
+  //     } else {
+  //       toast({
+  //         type: "error",
+  //         title: "Fejl",
+  //         message: "Kun JPG og jpeg og PNG filer og mindre end 1MB",
+  //       });
+  //     }
+  //   }
+  // };
+  // const UploadToServer = async (event) => {
+  //   const formData = new FormData();
+  //   formData.append("file", image);
+  //   formData.append("upload_preset", "my-uploads");
+  //   const data = await fetch(
+  //     "https://api.cloudinary.com/v1_1/dhk7j9vy2/image/upload",
+  //     {
+  //       method: "POST",
+  //       body: formData,
+  //     }
+  //   ).then((res) => res.json());
+  //   console.log(data);
+  //   console.log("Billede", data.secure_url);
+  //   const t = data.secure_url;
+  //   test = t;
+  //   console.log(t, "test");
+  // };
+  const UploadToServer = async (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
       setValidImage(i);
-      console.log(i);
+      console.log(validImage, "validImage");
+
+      console.log(test, "test");
       const t = i.name;
       const type = [];
       if (t !== undefined) {
@@ -52,8 +104,13 @@ const Prod = (props) => {
         type[1] === "png" ||
         (type[1] === "jpeg" && i.size < 1000000)
       ) {
-        console.log("image uploaded");
-        setImage(i);
+        const updateData = (key, value) => {
+          setProd({ ...Prod, [key]: value });
+          t();
+        };
+        updateData("sti", i);
+        console.log("image uploaded", Prod.sti);
+        setImage("t");
         setCreateObjectURL(URL.createObjectURL(i));
       } else {
         toast({
@@ -63,10 +120,16 @@ const Prod = (props) => {
         });
       }
     }
+    console.log(Prod.sti, "Prod");
+    if (Prod.sti === "") {
+      return;
+    }
   };
-  const UploadToServer = async (event) => {
+  let t = async () => {
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("file", Prod.sti);
+    console.log(Prod.sti, "v123");
+    console.log(formData, "formData");
     formData.append("upload_preset", "my-uploads");
     const data = await fetch(
       "https://api.cloudinary.com/v1_1/dhk7j9vy2/image/upload",
@@ -77,11 +140,9 @@ const Prod = (props) => {
     ).then((res) => res.json());
     console.log(data);
     console.log("Billede", data.secure_url);
-    const t = data.secure_url;
-    test = t;
-    console.log(t, "test");
+    setProd({ ...Prod, sti: data.secure_url });
+    console.log(Prod.sti, "test");
   };
-
   let handleSubmit = async (e) => {
     try {
       const User = getCurrentUser();
@@ -98,7 +159,6 @@ const Prod = (props) => {
         });
         return;
       }
-      await UploadToServer();
       if (Prod.titel === "" || Prod.besk === "" || image === null) {
         toast({ type: "error", title: "Fejl", message: "Udfyld alle felter" });
         console.log(User);
@@ -114,12 +174,8 @@ const Prod = (props) => {
       } else {
         if (typeof window !== "undefined") {
           console.log(Prod);
-          if (
-            Prod.sti.length >= 5 &&
-            Prod.katergori.length >= 3 &&
-            Prod.titel.length >= 3
-          ) {
-            await handleImage();
+          if (Prod.katergori.length >= 3 && Prod.titel.length >= 3) {
+            console.log("success");
             await saveProd(Prod);
 
             await revalidate();
@@ -127,14 +183,7 @@ const Prod = (props) => {
             toast({ type: "success", message: "Produktet er oprettet" });
           } else {
             console.log("fejl");
-            if (Prod.sti.length < 5) {
-              toast({
-                type: "error",
-                title: "Fejl",
-                message: "sti skal være over 5",
-              });
-              console.log("sti");
-            }
+
             if (Prod.katergori.length <= 3) {
               toast({
                 type: "error",
@@ -206,7 +255,7 @@ const Prod = (props) => {
             type="file"
             placeholder="sti"
             title={image}
-            onChange={uploadToClient}
+            onChange={UploadToServer}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicAntal">

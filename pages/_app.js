@@ -6,7 +6,7 @@ import { Fragment, useEffect } from "react";
 import Menu from "../compements/Menu";
 import { getCurrentUser } from "../Service/authService";
 import { useState } from "react";
-import { SessionProvider } from "next-auth/react";
+import { SSRProvider } from "react-bootstrap";
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
@@ -28,9 +28,11 @@ export default function App({
         closeOnClick
         pauseOnHover
       />
+      <SSRProvider>
         <Menu user={User}>
           <Component {...pageProps} />
         </Menu>
+      </SSRProvider>
     </Fragment>
   );
 }
