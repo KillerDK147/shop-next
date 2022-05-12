@@ -6,6 +6,7 @@ import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
 import Router from "next/router";
 const Prod = (props) => {
+  const test = "";
   const [image, setImage] = useState(null);
   const [validImage, setValidImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -32,7 +33,10 @@ const Prod = (props) => {
     setProd({ ...Prod, katergori: e });
     console.log(`jeg er nu ${Prod.katergori}`);
   };
-  const uploadToClient = (event) => {
+  const handleImage = async () => {
+    setProd({ ...Prod, sti: test });
+  };
+  const uploadToClient = async (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
       setValidImage(i);
@@ -51,24 +55,31 @@ const Prod = (props) => {
         console.log("image uploaded");
         setImage(i);
         setCreateObjectURL(URL.createObjectURL(i));
-        setProd({ ...Prod, sti: i.name });
       } else {
         toast({
           type: "error",
           title: "Fejl",
-          message: "Kun JPG og PNG filer",
+          message: "Kun JPG og jpeg og PNG filer og mindre end 1MB",
         });
       }
     }
   };
-  const uploadToServer = async (event) => {
-    const body = new FormData();
-    // console.log("file", image)
-    body.append("file", image);
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body,
-    });
+  const UploadToServer = async (event) => {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "my-uploads");
+    const data = await fetch(
+      "https://api.cloudinary.com/v1_1/dhk7j9vy2/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    ).then((res) => res.json());
+    console.log(data);
+    console.log("Billede", data.secure_url);
+    const t = data.secure_url;
+    test = t;
+    console.log(t, "test");
   };
 
   let handleSubmit = async (e) => {
@@ -87,6 +98,7 @@ const Prod = (props) => {
         });
         return;
       }
+      await UploadToServer();
       if (Prod.titel === "" || Prod.besk === "" || image === null) {
         toast({ type: "error", title: "Fejl", message: "Udfyld alle felter" });
         console.log(User);
@@ -107,9 +119,8 @@ const Prod = (props) => {
             Prod.katergori.length >= 3 &&
             Prod.titel.length >= 3
           ) {
+            await handleImage();
             await saveProd(Prod);
-
-            await uploadToServer();
 
             await revalidate();
             console.log("saved");
