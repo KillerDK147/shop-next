@@ -118,6 +118,7 @@ const Prod = (props) => {
           title: "Fejl",
           message: "Kun JPG og jpeg og PNG filer og mindre end 1MB",
         });
+        return;
       }
       setValidImage(i);
       console.log(validImage, "validImage");
