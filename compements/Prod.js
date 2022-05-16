@@ -102,6 +102,23 @@ const Prod = (props) => {
   async function uploadToServer(event) {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
+      const t = i.name;
+      const type = [];
+      if (t !== undefined) {
+        type = t.split(".");
+      }
+      console.log(i.size);
+      if (
+        type[1] !== "jpg" ||
+        type[1] !== "png" ||
+        (type[1] !== "jpeg" && i.size < 1000000)
+      ) {
+        toast({
+          type: "error",
+          title: "Fejl",
+          message: "Kun JPG og jpeg og PNG filer og mindre end 1MB",
+        });
+      }
       setValidImage(i);
       console.log(validImage, "validImage");
     }
