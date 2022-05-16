@@ -108,13 +108,16 @@ const Prod = (props) => {
         type = t.split(".");
       }
       console.log(i.size);
-      if (
-        type[1] === "jpg" ||
-        type[1] === "png" ||
-        (type[1] === "jpeg" && i.size < 10000000)
-      ) {
+      console.log(type[1]);
+      if (type[1] === "jpg" || type[1] === "png" || type[1] === "jpeg" || i.size < 10000000) {
         setValidImage(i);
         console.log(validImage, "validImage");
+        toast({
+          type: "success",
+          title: " Billede uploadet",
+          message: "Billede uploadet",
+        });
+        return;
       }
       toast({
         type: "error",
