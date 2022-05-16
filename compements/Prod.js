@@ -10,6 +10,7 @@ const Prod = (props) => {
   const [image, setImage] = useState(null);
   const [validImage, setValidImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [Prod, setProd] = useState({
     katergori: "grøntsager",
     titel: "",
@@ -29,17 +30,29 @@ const Prod = (props) => {
     }
   }, [Prod]);
   useEffect(() => {
-    setProd({ ...Prod, sti: image });
-    console.log(Prod);
-  }, [image]);
+    if (validImage) {
+      async function updateData(key, value) {
+        setProd({ ...Prod, [key]: value });
+
+        console.log(value, "imageUrl");
+      }
+      updateData("sti", imageUrl);
+    }
+  }, [imageUrl]);
+  useEffect(() => {
+    async function updateData() {
+      if (imageUrl) {
+        await saveProd(Prod);
+        await revalidate();
+      }
+    }
+    updateData();
+  }, [Prod.sti]);
 
   const handleSelect = async (e) => {
     console.log(e);
     setProd({ ...Prod, katergori: e });
     console.log(`jeg er nu ${Prod.katergori}`);
-  };
-  const handleImage = async () => {
-    setProd({ ...Prod, sti: test });
   };
   // const uploadToClient = async (event) => {
   //   if (event.target.files && event.target.files[0]) {
@@ -86,49 +99,20 @@ const Prod = (props) => {
   //   test = t;
   //   console.log(t, "test");
   // };
-  const UploadToServer = async (event) => {
+  async function uploadToServer(event) {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
       setValidImage(i);
       console.log(validImage, "validImage");
-
-      console.log(test, "test");
-      const t = i.name;
-      const type = [];
-      if (t !== undefined) {
-        type = t.split(".");
-      }
-      console.log(i.size);
-      if (
-        type[1] === "jpg" ||
-        type[1] === "png" ||
-        (type[1] === "jpeg" && i.size < 1000000)
-      ) {
-        const updateData = (key, value) => {
-          setProd({ ...Prod, [key]: value });
-          t();
-        };
-        updateData("sti", i);
-        console.log("image uploaded", Prod.sti);
-        setImage("t");
-        setCreateObjectURL(URL.createObjectURL(i));
-      } else {
-        toast({
-          type: "error",
-          title: "Fejl",
-          message: "Kun JPG og jpeg og PNG filer og mindre end 1MB",
-        });
-      }
     }
-    console.log(Prod.sti, "Prod");
-    if (Prod.sti === "") {
-      return;
-    }
-  };
-  let t = async () => {
     const formData = new FormData();
-    formData.append("file", Prod.sti);
-    console.log(Prod.sti, "v123");
+    formData.append("file", validImage);
+  }
+  let th = async (value) => {
+    const formData = new FormData();
+    console.log("FormData");
+    formData.append("file", value);
+    console.log(value, "v123");
     console.log(formData, "formData");
     formData.append("upload_preset", "my-uploads");
     const data = await fetch(
@@ -140,26 +124,31 @@ const Prod = (props) => {
     ).then((res) => res.json());
     console.log(data);
     console.log("Billede", data.secure_url);
-    setProd({ ...Prod, sti: data.secure_url });
+    const updateData = (value) => {
+      setImageUrl(value);
+      console.log(Prod, "imageUrl");
+    };
+    updateData(data.secure_url);
+    console.log(data.secure_url, "Prod.sti");
     console.log(Prod.sti, "test");
   };
   let handleSubmit = async (e) => {
     try {
       const User = getCurrentUser();
       e.preventDefault();
-      if (!image) {
+      if (!validImage) {
         toast({ type: "error", title: "Fejl", message: "Vælg et billede" });
         return;
       }
-      if (validImage !== image) {
-        toast({
-          type: "error",
-          title: "Fejl",
-          message: "Det er ikke samme billede",
-        });
-        return;
-      }
-      if (Prod.titel === "" || Prod.besk === "" || image === null) {
+      // if (validImage !== image) {
+      //   toast({
+      //     type: "error",
+      //     title: "Fejl",
+      //     message: "Det er ikke samme billede",
+      //   });
+      //   return;
+      // }
+      if (Prod.titel === "" || Prod.besk === "" || validImage === null) {
         toast({ type: "error", title: "Fejl", message: "Udfyld alle felter" });
         console.log(User);
         return;
@@ -175,10 +164,10 @@ const Prod = (props) => {
         if (typeof window !== "undefined") {
           console.log(Prod);
           if (Prod.katergori.length >= 3 && Prod.titel.length >= 3) {
+            await th(validImage);
             console.log("success");
-            await saveProd(Prod);
+            console.log(imageUrl);
 
-            await revalidate();
             console.log("saved");
             toast({ type: "success", message: "Produktet er oprettet" });
           } else {
@@ -212,6 +201,7 @@ const Prod = (props) => {
       ...Prod,
       [e.target.name]: e.target.value,
     });
+    console.log(Prod);
   };
   return (
     <div className="container">
@@ -255,7 +245,7 @@ const Prod = (props) => {
             type="file"
             placeholder="sti"
             title={image}
-            onChange={UploadToServer}
+            onChange={uploadToServer}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicAntal">
