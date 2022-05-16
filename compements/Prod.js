@@ -109,19 +109,19 @@ const Prod = (props) => {
       }
       console.log(i.size);
       if (
-        type[1] !== "jpg" ||
-        type[1] !== "png" ||
-        (type[1] !== "jpeg" && i.size < 10000000)
+        type[1] === "jpg" ||
+        type[1] === "png" ||
+        (type[1] === "jpeg" && i.size < 10000000)
       ) {
-        toast({
-          type: "error",
-          title: "Fejl",
-          message: "Kun JPG og jpeg og PNG filer og mindre end 10MB",
-        });
-        return;
+        setValidImage(i);
+        console.log(validImage, "validImage");
       }
-      setValidImage(i);
-      console.log(validImage, "validImage");
+      toast({
+        type: "error",
+        title: "Fejl",
+        message: "Kun JPG og jpeg og PNG filer og mindre end 10MB",
+      });
+      return;
     }
     const formData = new FormData();
     formData.append("file", validImage);
