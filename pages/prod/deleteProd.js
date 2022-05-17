@@ -14,7 +14,7 @@ const DeleteProd = () => {
         });
     };
     fetchData();
-  }, [cards]);
+  }, []);
 
   return (
     <div>
