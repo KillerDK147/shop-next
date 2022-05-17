@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
+
 import Router from "next/router";
 const Prod = (props) => {
   const test = "";
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState([]);
   const [validImage, setValidImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -16,6 +17,7 @@ const Prod = (props) => {
     titel: "",
     besk: "",
     sti: "",
+    publicId: "",
     enhed: "",
     antal: 0,
     pris: 0,
@@ -28,21 +30,24 @@ const Prod = (props) => {
     } else {
       Router.push("/");
     }
-  }, [Prod]);
+  }, []);
   useEffect(() => {
     if (validImage) {
       async function updateData(key, value) {
+        setProd({ ...Prod, publicId: imageUrl.public_id });
         setProd({ ...Prod, [key]: value });
 
+        console.log(imageUrl, "mat du er en dårlig programerer");
         console.log(value, "imageUrl");
       }
-      updateData("sti", imageUrl);
+      updateData("sti", imageUrl.secure_url);
     }
-  }, [imageUrl]);
+  }, [imageUrl, image]);
   useEffect(() => {
     async function updateData() {
       if (imageUrl) {
-        await saveProd(Prod);
+        console.log(imageUrl.public_id, "jeg er prod");
+        await saveProd(Prod, imageUrl.public_id);
         await revalidate();
       }
     }
@@ -109,7 +114,11 @@ const Prod = (props) => {
       }
       console.log(i.size);
       console.log(type[1]);
-      if (type[1] === "jpg" || type[1] === "png" || type[1] === "jpeg" || i.size < 10000000) {
+      if (
+        type[1] === "jpg" ||
+        type[1] === "png" ||
+        (type[1] === "jpeg" && i.size < 10000000)
+      ) {
         setValidImage(i);
         console.log(validImage, "validImage");
         toast({
@@ -143,13 +152,18 @@ const Prod = (props) => {
         body: formData,
       }
     ).then((res) => res.json());
-    console.log(data);
+    console.log(data, "jeg er data");
     console.log("Billede", data.secure_url);
     const updateData = (value) => {
       setImageUrl(value);
       console.log(Prod, "imageUrl");
     };
-    updateData(data.secure_url);
+    // const updateData2 = (value) => {
+    //   setImage(value);
+    //   console.log(Prod, "imageUrl");
+    // };
+    updateData(data);
+    // updateData(data.secure_url);
     console.log(data.secure_url, "Prod.sti");
     console.log(Prod.sti, "test");
   };

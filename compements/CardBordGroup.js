@@ -18,7 +18,7 @@ const CardBord = ({ cards }) => {
       <h1>Produtker</h1>
       <CardGroup>
         {currentCars.map((card, key) => (
-          <Card key={key} {...card} />
+          <Card key={key} {...card} style={{ height: 50 }} />
         ))}
       </CardGroup>
       <Pagination

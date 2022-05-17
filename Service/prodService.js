@@ -1,23 +1,14 @@
 import httpService from "./httpService";
 const apiEndpoint = "produkter/";
-export function saveProd(prod) {
-  if (prod._id) {
-    const body = {
-      ...prod,
-      titel: prod.titel,
-      katergori: prod.katergori,
-      besk: prod.besk,
-      sti: prod.sti,
-      antal: prod.antal,
-      enhed: prod.enhed,
-      pris: prod.pris,
-      seller: prod.seller,
-    };
-    delete body._id;
-    return httpService.put(apiEndpoint + prod._id, body);
-  }
+export function saveProd(prod, t) {
+  const body = {
+    ...prod,
+    publicId: t,
+  };
+  console.log(body, "jeg er body");
+
   console.log(prod);
-  return httpService.post(apiEndpoint, prod);
+  return httpService.post(apiEndpoint, body);
 }
 
 export async function getProd() {
