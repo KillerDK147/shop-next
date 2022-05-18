@@ -46,7 +46,7 @@ export async function getStaticProps() {
   const result = await httpService.get("produkter/");
   const card = result.data;
   console.log("card");
-  console.log(card.titel);
+  console.log(card);
   return {
     props: {
       cards: card.map((card) => ({
