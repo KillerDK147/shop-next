@@ -7,10 +7,8 @@ import { revalidate } from "../Service/Reload";
 
 import Router from "next/router";
 const Prod = (props) => {
-  const test = "";
   const [image, setImage] = useState([]);
   const [validImage, setValidImage] = useState(null);
-  const [createObjectURL, setCreateObjectURL] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [Prod, setProd] = useState({
     katergori: "grøntsager",
@@ -34,7 +32,6 @@ const Prod = (props) => {
   useEffect(() => {
     if (validImage) {
       async function updateData(key, value) {
-        setProd({ ...Prod, publicId: imageUrl.public_id });
         setProd({ ...Prod, [key]: value });
 
         console.log(imageUrl, "mat du er en dårlig programerer");
@@ -42,7 +39,7 @@ const Prod = (props) => {
       }
       updateData("sti", imageUrl.secure_url);
     }
-  }, [imageUrl, image]);
+  }, [imageUrl]);
   useEffect(() => {
     async function updateData() {
       if (imageUrl) {
@@ -117,7 +114,7 @@ const Prod = (props) => {
       if (
         type[1] === "jpg" ||
         type[1] === "png" ||
-        (type[1] === "jpeg" && i.size < 10000000)
+        (type[1] === "jpeg" && i.size < 4000000)
       ) {
         setValidImage(i);
         console.log(validImage, "validImage");
@@ -131,7 +128,7 @@ const Prod = (props) => {
       toast({
         type: "error",
         title: "Fejl",
-        message: "Kun JPG og jpeg og PNG filer og mindre end 10MB",
+        message: "Kun JPG og jpeg og PNG filer og mindre end 4MB",
       });
       return;
     }

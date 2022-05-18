@@ -2,7 +2,7 @@ import { Button, Card as BsCard } from "react-bootstrap";
 const Card = ({ titel, katergori, besk, sti, antal, enhed, pris }) => {
   return (
     <BsCard>
-      <div className="p-2">
+      <div>
         <BsCard.Img variant="top" src={sti} />
       </div>
       <BsCard.Body>
@@ -19,5 +19,4 @@ const Card = ({ titel, katergori, besk, sti, antal, enhed, pris }) => {
     </BsCard>
   );
 };
-
 export default Card;
