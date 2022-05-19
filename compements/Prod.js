@@ -142,13 +142,10 @@ const Prod = (props) => {
     console.log(value, "v123");
     console.log(formData, "formData");
     formData.append("upload_preset", "my-uploads");
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/dhk7j9vy2/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    ).then((res) => res.json());
+    const data = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
     console.log(data, "jeg er data");
     console.log("Billede", data.secure_url);
     const updateData = (value) => {
