@@ -1,15 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { getCurrentUser } from "../Service/authService";
 import { useEffect, useState } from "react";
 import { saveProd } from "../Service/prodService";
 import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
-
+import * as ReactBootStrap from "react-bootstrap";
 import Router from "next/router";
 const Prod = (props) => {
   const [image, setImage] = useState([]);
   const [validImage, setValidImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [Prod, setProd] = useState({
     katergori: "grøntsager",
     titel: "",
@@ -45,7 +47,9 @@ const Prod = (props) => {
       if (imageUrl) {
         console.log(imageUrl.public_id, "jeg er prod");
         await saveProd(Prod, imageUrl.public_id);
-        await revalidate();
+        await revalidate().then(() => {
+          setLoading(true);
+        });
       }
     }
     updateData();
@@ -114,6 +118,7 @@ const Prod = (props) => {
       if (
         type[1] === "jpg" ||
         type[1] === "png" ||
+        type[1] === "webp" ||
         (type[1] === "jpeg" && i.size < 4000000)
       ) {
         setValidImage(i);
@@ -193,6 +198,7 @@ const Prod = (props) => {
         if (typeof window !== "undefined") {
           console.log(Prod);
           if (Prod.katergori.length >= 3 && Prod.titel.length >= 3) {
+            setLoading(false);
             await th(validImage);
             console.log("success");
             console.log(imageUrl);
@@ -234,6 +240,9 @@ const Prod = (props) => {
   };
   return (
     <div className="container">
+      <div className="border d-flex align-items-center justify-content-center mt-5 border-0">
+        {loading ? null : <ReactBootStrap.Spinner animation="border" />}
+      </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3 mt-3" controlId="formBasicTitel">
           <Form.Label>titel</Form.Label>
