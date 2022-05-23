@@ -5,6 +5,7 @@ import { revalidate } from "../Service/Reload";
 import toast from "./toast/toast";
 import Router from "next/router";
 import * as ReactBootStrap from "react-bootstrap";
+import react, { useState } from "react";
 const DeleteCard = ({
   titel,
   katergori,
