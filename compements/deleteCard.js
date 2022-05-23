@@ -3,8 +3,8 @@ import { getCurrentUser } from "../Service/authService";
 import { deleteProd } from "../Service/prodService";
 import { revalidate } from "../Service/Reload";
 import toast from "./toast/toast";
-import { reload } from "../pages/prod/deleteProd";
 import Router from "next/router";
+import App from "../pages/_app";
 const DeleteCard = ({
   titel,
   katergori,
@@ -21,9 +21,12 @@ const DeleteCard = ({
     e.preventDefault();
     try {
       if (_id !== undefined) {
+        changeloading(true);
         console.log(_id);
         await deleteProd(_id);
-        await revalidate();
+        await revalidate().then(() => {
+          App.reload(false);
+        });
         console.log("deleted");
         Router.reload();
         toast({ type: "success", message: "Produktet er slettet" });

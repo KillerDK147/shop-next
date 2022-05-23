@@ -2,8 +2,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_url;
-console.log("process.env.NEXT_PUBLIC_url");
-console.log(process.env.NEXT_PUBLIC_url);
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&

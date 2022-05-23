@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import httpService from "../Service/httpService";
 import { SSRProvider } from "react-bootstrap";
 import { revalidate } from "../Service/Reload";
+import { change } from "./_app";
 function Home(props) {
   // const cards = [
   //   {%D
@@ -35,6 +36,13 @@ function Home(props) {
       {process.env.NODE_ENV == "development" && (
         <Fragment>
           <button onClick={revalidate}>Refresh</button>
+          <button
+            onClick={() => {
+              change(false);
+            }}
+          >
+            Change
+          </button>
         </Fragment>
       )}
     </div>

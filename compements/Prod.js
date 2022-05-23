@@ -7,7 +7,7 @@ import toast from "./toast/toast";
 import { revalidate } from "../Service/Reload";
 import * as ReactBootStrap from "react-bootstrap";
 import Router from "next/router";
-const Prod = (props) => {
+const Prod = () => {
   const [image, setImage] = useState([]);
   const [validImage, setValidImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -49,6 +49,7 @@ const Prod = (props) => {
         await saveProd(Prod, imageUrl.public_id);
         await revalidate().then(() => {
           setLoading(true);
+          toast({ type: "success", message: "Produktet er oprettet" });
         });
       }
     }
@@ -204,7 +205,6 @@ const Prod = (props) => {
             console.log(imageUrl);
 
             console.log("saved");
-            toast({ type: "success", message: "Produktet er oprettet" });
           } else {
             console.log("fejl");
 
