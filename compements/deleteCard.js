@@ -27,12 +27,11 @@ const DeleteCard = ({
         console.log(_id);
         await deleteProd(_id);
         await revalidate().then(() => {
-          toast.success("Produktet er slettet");
           setLoading(true);
+          console.log("deleted");
+          Router.reload();
+          toast({ type: "success", message: "Produktet er slettet" });
         });
-        console.log("deleted");
-        Router.reload();
-        toast({ type: "success", message: "Produktet er slettet" });
       }
     } catch (ex) {
       toast({ type: "error", message: "Produktet er ikke slettet" });
