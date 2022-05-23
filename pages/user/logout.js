@@ -13,7 +13,7 @@ const logout = () => {
       <button
         onClick={() => {
           localStorage.removeItem("x-auth-token");
-          Router.push("/");
+          window.location.href = "/";
         }}
       >
         Logout

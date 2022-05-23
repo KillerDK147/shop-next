@@ -31,10 +31,14 @@ export default function Home(props) {
                 )}
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="/user/logout">
-                    Logout
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/user/">login</NavDropdown.Item>
+                  {props.user && (
+                    <NavDropdown.Item href="/user/logout">
+                      Logout
+                    </NavDropdown.Item>
+                  )}
+                  {!props.user && (
+                    <NavDropdown.Item href="/user/">login</NavDropdown.Item>
+                  )}
 
                   <div>
                     <NavDropdown.Divider />
